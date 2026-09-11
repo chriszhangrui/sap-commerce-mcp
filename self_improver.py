@@ -10,7 +10,11 @@ from typing import Optional, List, Dict, Any
 MODULE_DIR = os.path.dirname(os.path.abspath(__file__))
 KB_FILE = os.path.join(MODULE_DIR, "knowledge_base.json")
 LOG_FILE = os.path.join(MODULE_DIR, "evolution_log.json")
-MCP_SCHEMA_DIR = "/Users/I319510/.gemini/antigravity-cli/mcp/hybris-hac"
+MCP_SCHEMA_DIRS = [
+    os.path.expanduser("~/.gemini/antigravity-cli/mcp/sap-commerce-mcp"),
+    os.path.expanduser("~/.gemini/antigravity/mcp/sap-commerce-mcp"),
+    os.path.expanduser("~/.gemini/antigravity-cli/mcp/hybris-hac")
+]
 
 INITIAL_KNOWLEDGE = [
     {
@@ -158,21 +162,22 @@ class SelfImprover:
         line = p.stdout.readline()
         tools = json.loads(line).get("result", {}).get("tools", [])
 
-        os.makedirs(MCP_SCHEMA_DIR, exist_ok=True)
         count = 0
-        for t in tools:
-            schema_path = os.path.join(MCP_SCHEMA_DIR, f"{t['name']}.json")
-            tool_data = {
-                "name": t.get("name"),
-                "description": t.get("description"),
-                "parameters": t.get("inputSchema", {})
-            }
-            with open(schema_path, "w", encoding="utf-8") as f:
-                json.dump(tool_data, f, ensure_ascii=False, indent=2)
-            count += 1
+        for target_dir in MCP_SCHEMA_DIRS:
+            os.makedirs(target_dir, exist_ok=True)
+            for t in tools:
+                schema_path = os.path.join(target_dir, f"{t['name']}.json")
+                tool_data = {
+                    "name": t.get("name"),
+                    "description": t.get("description"),
+                    "parameters": t.get("inputSchema", {})
+                }
+                with open(schema_path, "w", encoding="utf-8") as f:
+                    json.dump(tool_data, f, ensure_ascii=False, indent=2)
+            count = len(tools)
 
         p.terminate()
-        return f"✅ 已自动刷新并同步全部 {count} 个 MCP 工具 Schema 至 {MCP_SCHEMA_DIR}"
+        return f"✅ 已自动刷新并同步全部 {count} 个 MCP 工具 Schema 至 {MCP_SCHEMA_DIRS[0]}"
 
     def apply_improvement(
         self,
@@ -271,7 +276,7 @@ class SelfImprover:
                 pass
 
         out = [
-            "🛠️ **=== hybris-hac MCP 自我健康与自进化状态审计 ===**",
+            "🛠️ **=== SAP-Commerce-MCP 自我健康与自进化状态审计 ===**",
             f"- **运行健康状态:** {'🟢 核心模块全部正常就绪' if all_ok else '🔴 部分模块异常'}",
             f"- **沉淀成功脚本数:** `{lib_count}` 个已验证脚本（保存在 `script_library/`）",
             f"- **沉淀经验知识库:** `{len(kb)}` 条避坑规则（保存在 `knowledge_base.json`）",

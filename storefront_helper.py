@@ -8,7 +8,7 @@ from script_manager import ScriptManager
 
 class StorefrontHelper:
     """
-    Empowers hybris-hac-mcp to diagnose, configure, scaffold, and optimize
+    Empowers sap-commerce-mcp to diagnose, configure, scaffold, and optimize
     Composable Storefront (Spartacus) from both the Commerce Cloud (CMS/OCC)
     backend and local frontend workspace configurations.
     """
@@ -275,7 +275,7 @@ if (jobs) {{
 
     def configure_local_storefront_app(
         self,
-        storefront_dir: str = "/Users/I319510/sap-ai-commerce-demo/spartacus-storefront",
+        storefront_dir: Optional[str] = None,
         backend_url: str = "https://localhost:9002",
         base_site: str = "powertools-spa",
         b2b_mode: bool = True,
@@ -287,6 +287,10 @@ if (jobs) {{
         2. Aligns spartacus-b2b-configuration.providers.ts baseSite and languages
         3. Returns status and launch instructions.
         """
+        storefront_dir = storefront_dir or os.environ.get(
+            "SPARTACUS_PROJECT_PATH",
+            "/Users/I319510/sap-ai-commerce-demo/spartacus-storefront"
+        )
         is_zh = lang.startswith("zh")
         if not os.path.exists(storefront_dir):
             return f"❌ 前端项目目录不存在: {storefront_dir}"

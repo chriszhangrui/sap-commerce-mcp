@@ -23,8 +23,9 @@ class HACClient:
         self.username = username or os.environ.get("HAC_USER", "admin")
         self.password = password or os.environ.get("HAC_PASS", "nimda")
         effective_url = base_url or os.environ.get("HAC_URL", "https://localhost:9002")
-        self.sso_storage_path = sso_storage_path or os.path.expanduser(
-            "~/.gemini/antigravity-cli/brain/88fd2c1d-9fbd-4eea-b5d3-da3e40a970e9/scratch/hac_storage_state.json"
+        self.sso_storage_path = sso_storage_path or os.environ.get(
+            "HAC_STORAGE_PATH",
+            os.path.expanduser("~/.mcp-servers/sap-commerce-mcp/hac_storage_state.json")
         )
         self.session = requests.Session()
         self.session.verify = False

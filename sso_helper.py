@@ -2,7 +2,10 @@ import subprocess
 import os
 import sys
 
-DEFAULT_STORAGE_PATH = os.path.expanduser("~/.gemini/antigravity-cli/brain/88fd2c1d-9fbd-4eea-b5d3-da3e40a970e9/scratch/hac_storage_state.json")
+DEFAULT_STORAGE_PATH = os.environ.get(
+    "HAC_STORAGE_PATH",
+    os.path.expanduser("~/.mcp-servers/sap-commerce-mcp/hac_storage_state.json")
+)
 
 SSO_SCRIPT = """
 import time

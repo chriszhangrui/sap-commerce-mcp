@@ -21,7 +21,13 @@ venv.bak/
 Thumbs.db
 
 # IDE
-.idea/
-.vscode/
 *.swp
 *.swo
+.idea/
+.vscode/
+
+# Packaging
+*.egg-info/
+dist/
+build/
+

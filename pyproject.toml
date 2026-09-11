@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sap-commerce-mcp"
+version = "3.0.0"
+description = "SAP Commerce Cloud (Hybris) & Headless Composable Storefront (Spartacus) Automation, Governance & Self-Evolution MCP Server"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Chris Zhang", email = "chris.zhang01@sap.com" }
+]
+dependencies = [
+    "mcp>=1.2.0",
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "pydantic>=2.0.0",
+    "urllib3>=2.0.0"
+]
+
+[project.scripts]
+sap-commerce-mcp = "server:main"
+
+[tool.setuptools]
+py-modules = [
+    "server",
+    "hac_client",
+    "sso_helper",
+    "solr_sync_helper",
+    "spartacus_doctor",
+    "b2b_org_helper",
+    "storefront_crawler",
+    "site_scaffolder",
+    "script_manager",
+    "self_improver",
+    "promotion_helper",
+    "storefront_helper"
+]

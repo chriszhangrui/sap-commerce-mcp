@@ -460,7 +460,7 @@ def hac_library_list(
     if not items:
         return "📁 脚本库中暂无匹配的已归档脚本。"
 
-    out = [f"📁 **=== hybris-hac 统一脚本资产库 (共检索到 {len(items)} 个已验证脚本) ===**\n"]
+    out = [f"📁 **=== SAP-Commerce-MCP 统一脚本资产库 (共检索到 {len(items)} 个已验证脚本) ===**\n"]
     for it in items:
         out.append(f"- **`{it['id']}`** [{it['type'].upper()}] - {it['name']}")
         out.append(f"  • **适用场景/分类:** `{it['category']}` | **客户:** {it.get('client', '通用')}")
@@ -519,7 +519,7 @@ def hac_self_improve(
 @mcp.tool()
 def hac_self_diagnose() -> str:
     """
-    Runs a self-health audit on the hybris-hac MCP server: checks regression test suite,
+    Runs a self-health audit on the SAP-Commerce-MCP server: checks regression test suite,
     counts archived scripts in unified library, and reviews learned best-practice rules.
     """
     return _self_improver.diagnose_self()
@@ -697,7 +697,7 @@ def hac_storefront_autofix(
 
 @mcp.tool()
 def hac_storefront_app_config(
-    storefront_dir: str = "/Users/I319510/sap-ai-commerce-demo/spartacus-storefront",
+    storefront_dir: Optional[str] = None,
     backend_url: str = "https://localhost:9002",
     base_site: str = "powertools-spa",
     b2b_mode: bool = True,
@@ -724,6 +724,9 @@ def hac_storefront_app_config(
         lang=lang
     )
 
-if __name__ == "__main__":
-    # Run the server over stdio
+def main():
+    """CLI entrypoint for sap-commerce-mcp."""
     mcp.run(transport="stdio")
+
+if __name__ == "__main__":
+    main()
