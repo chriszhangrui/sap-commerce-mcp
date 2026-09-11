@@ -1,0 +1,34 @@
+# Verified Script: b2b_org_medical_mindray
+# Category: b2b_organization | Client: 迈瑞医疗
+# Date: 2026-09-11 11:54:41
+# Tags: b2b, organization, mindray, multilingual, approval
+
+$curr = USD
+$defaultPassword = nimda
+
+# 1. Units
+INSERT_UPDATE B2BUnit;uid[unique=true];name;locName[lang=en];locName[lang=zh];locName[lang=zh_TW];groups(uid);active[default=true]
+;MINDRAY_GLOBAL;Mindray Corporate Procurement HQ;Mindray Corporate Procurement HQ;迈瑞医疗 集团全球采购与供应链总部;邁瑞醫療 集團全球採購與供應鏈總部;b2bgroup;true
+;MINDRAY_DEVICES;Mindray Devices;Mindray Devices;迈瑞医疗 - 医疗设备与核心耗材采购部;邁瑞醫療 - 醫療設備與核心耗材採購部;MINDRAY_GLOBAL;true
+;MINDRAY_SUPPLY;Mindray Supply;Mindray Supply;迈瑞医疗 - 诊断试剂与供应链协同中心;邁瑞醫療 - 診斷試劑與供應鏈協同中心;MINDRAY_GLOBAL;true
+
+# 2. Budgets
+INSERT_UPDATE B2BBudget;code[unique=true];Unit(uid);budget;currency(isocode);dateRange[dateformat=dd.MM.yyyy hh:mm:ss,allownull=true];name[lang=en];name[lang=zh];name[lang=zh_TW];active[default=true]
+;MINDRAY_GLOBAL_Budget;MINDRAY_GLOBAL;100000;$curr;01.01.2025 00:00:00,31.12.2030 23:59:59;Annual Medical Sourcing Budget;迈瑞医疗 - 医疗设备与耗材年度集采专项预算;邁瑞醫療 - 醫療設備與耗材年度集採專項預算;true
+
+# 3. Cost Centers
+INSERT_UPDATE B2BCostCenter;code[unique=true];Unit(uid);currency(isocode);budgets(code);name[lang=en];name[lang=zh];name[lang=zh_TW];active[default=true]
+;CC_MINDRAY_DEVICES;MINDRAY_DEVICES;$curr;MINDRAY_GLOBAL_Budget;Devices Cost Center;医疗设备采购专属成本中心;醫療設備採購專屬成本中心;true
+;CC_MINDRAY_SUPPLY;MINDRAY_SUPPLY;$curr;MINDRAY_GLOBAL_Budget;Supply Cost Center;试剂与供应链专属成本中心;試劑與供應鏈專屬成本中心;true
+
+# 4. Approval Permissions
+INSERT_UPDATE B2BOrderThresholdPermission;code[unique=true];Unit(uid);threshold;currency(isocode);active[default=true]
+;MINDRAY_Threshold_Perm;MINDRAY_GLOBAL;800;$curr;true
+
+# 5. Customers
+INSERT_UPDATE B2BCustomer;uid[unique=true];name;email;customerID;defaultB2BUnit(uid);groups(uid);password[default=$defaultPassword];active[default=true]
+;approver.mindray_global@demo.com;迈瑞医疗 战略采购总监 (李明) / Director Ming Li;approver.mindray_global@demo.com;approver.mindray_global@demo.com;MINDRAY_GLOBAL;b2bgroup,b2bapprovergroup,b2bmanagergroup;;true
+;buyer.mindray_global@demo.com;迈瑞医疗 资深采购经理 (王浩) / Manager Hao Wang;buyer.mindray_global@demo.com;buyer.mindray_global@demo.com;MINDRAY_DEVICES;b2bgroup,b2bcustomergroup,unitorderviewergroup;;true
+
+UPDATE B2BCustomer;uid[unique=true];permissions(code,Unit(uid));approvers(uid)
+;buyer.mindray_global@demo.com;MINDRAY_Threshold_Perm:MINDRAY_GLOBAL;approver.mindray_global@demo.com

@@ -1,0 +1,14 @@
+[
+  {
+    "timestamp": "2026-09-11T14:32:52.674479",
+    "target_file": "promotion_helper.py & server.py",
+    "description": "内化方案B：新增 Drools 促销规则自动化编排工具 hac_promotion_scaffold 与 hac_promotion_list，支持订单门槛、买赠、A+B+C套餐与潜在促销引导提示",
+    "status": "VERIFIED_AND_APPLIED"
+  },
+  {
+    "timestamp": "2026-09-11T22:18:00.000000",
+    "target_file": "server.py & mcp_config.json",
+    "description": "品牌与工程架构升级：由 hybris-hac-mcp 全面更名为 SAP-Commerce-MCP (sap-commerce-mcp) v3.0.0，对齐 SAP CX 统一工具矩阵并保留向下兼容软链接",
+    "status": "VERIFIED_AND_APPLIED"
+  }
+]

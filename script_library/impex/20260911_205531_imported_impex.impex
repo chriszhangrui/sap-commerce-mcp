@@ -1,0 +1,27 @@
+# Verified Script: imported_impex
+# Category: general_impex | Client: Generic
+# Date: 2026-09-11 20:55:31
+# Tags: 
+
+$lang=zh_TW
+UPDATE SolrSort; indexedType(identifier)[unique=true]; code[unique=true]; name[lang=$lang]
+; powertoolsProductType ; relevance ; "關聯性"
+; powertoolsProductType ; topRated ; "最高評分"
+; powertoolsProductType ; name-asc ; "名稱（由 A 至 Z）"
+; powertoolsProductType ; name-desc ; "名稱（由 Z 至 A）"
+; powertoolsProductType ; price-asc ; "價格（由低至高）"
+; powertoolsProductType ; price-desc ; "價格（由高至低）"
+
+; apparel-ukProductType ; relevance ; "相關性"
+; apparel-ukProductType ; topRated ; "最高評分"
+; apparel-ukProductType ; name-asc ; "名稱（由 A 至 Z）"
+; apparel-ukProductType ; name-desc ; "名稱（由 Z 至 A）"
+; apparel-ukProductType ; price-asc ; "價格（由低至高）"
+; apparel-ukProductType ; price-desc ; "價格（由高至低）"
+
+; electronicsProductType ; relevance ; "關聯性"
+; electronicsProductType ; topRated ; "最高評分"
+; electronicsProductType ; name-asc ; "名稱（由 A 至 Z）"
+; electronicsProductType ; name-desc ; "名稱（由 Z 至 A）"
+; electronicsProductType ; price-asc ; "價格（由低至高）"
+; electronicsProductType ; price-desc ; "價格（由高至低）"

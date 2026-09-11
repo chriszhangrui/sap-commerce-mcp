@@ -1,0 +1,85 @@
+[
+  {
+    "id": "kb_test_1789115023",
+    "pattern": "test",
+    "description": "prob",
+    "resolution": "sol",
+    "tags": [
+      "b2b"
+    ],
+    "created_at": "2026-09-11T16:23:43.392299"
+  },
+  {
+    "id": "kb_drools_promotion_engine_hot_compile_lock_release_1789108298",
+    "pattern": "Drools Promotion Engine Hot-Compile Lock Release",
+    "description": "RuleEngine compilation fails or skips when AbstractRulesModule lockAcquired is left true or transaction is not committed.",
+    "resolution": "Always set mod.lockAcquired = false on promotions-module and invoke Transaction.current().commit() before cronJobService.performCronJob(cronJob, false).",
+    "tags": [
+      "promotions",
+      "drools",
+      "rule_engine",
+      "groovy"
+    ],
+    "created_at": "2026-09-11T14:31:38.345741"
+  },
+  {
+    "id": "kb_lang_zh_cn",
+    "pattern": "Language 'zh_CN' not found",
+    "description": "Commerce Cloud standard Simplified Chinese language code in C2L table is 'zh', not 'zh_CN'.",
+    "resolution": "Automatically normalize 'zh_CN' to 'zh' when generating ImpEx for Language and localized attributes.",
+    "tags": [
+      "i18n",
+      "language",
+      "impex"
+    ],
+    "created_at": "2026-09-11T11:00:00"
+  },
+  {
+    "id": "kb_b2b_budget_fields",
+    "pattern": "B2BBudget creation failure",
+    "description": "B2BBudget requires Unit(uid) and dateRange[dateformat=dd.MM.yyyy hh:mm:ss,allownull=true].",
+    "resolution": "Always link B2BBudget to root B2BUnit and specify full dateRange.",
+    "tags": [
+      "b2b",
+      "budget",
+      "impex"
+    ],
+    "created_at": "2026-09-11T11:00:00"
+  },
+  {
+    "id": "kb_solr_cronjob_bypass",
+    "pattern": "Solr reindex cannot be performed yet / cronjob queued",
+    "description": "Triggering cronjobs can get delayed or blocked by scheduler state.",
+    "resolution": "Call IndexerService.performFullIndex(cfg) directly in JVM via Groovy for immediate synchronous execution.",
+    "tags": [
+      "solr",
+      "indexer",
+      "groovy"
+    ],
+    "created_at": "2026-09-11T11:00:00"
+  },
+  {
+    "id": "kb_hsqldb_polymorphic_query",
+    "pattern": "HSQLDB column type cast exception with OAuthClientDetails / AbstractPage",
+    "description": "FlexibleSearch with polymorphic sub-types can fail on direct attribute selects.",
+    "resolution": "Query SELECT {pk} and fetch required attributes via Java/Groovy getters.",
+    "tags": [
+      "flexsearch",
+      "hsqldb",
+      "groovy"
+    ],
+    "created_at": "2026-09-11T11:00:00"
+  },
+  {
+    "id": "kb_b2b_cost_center_type",
+    "pattern": "Type code invalid for CostCenter",
+    "description": "In Hybris B2B commerce, the ItemType is B2BCostCenter, not CostCenter.",
+    "resolution": "Query and import using type code B2BCostCenter.",
+    "tags": [
+      "b2b",
+      "costcenter",
+      "impex"
+    ],
+    "created_at": "2026-09-11T11:00:00"
+  }
+]
