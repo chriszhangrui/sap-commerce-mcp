@@ -268,6 +268,7 @@ def hac_scaffold_greenfield_site(
     channel: str = "B2B",
     currency: str = "USD",
     languages: Optional[List[str]] = None,
+    source_url: Optional[str] = None,
     storefront_origin: str = "http://localhost:4200",
     content_catalog: Optional[str] = None,
     delivery_countries: Optional[List[str]] = None,
@@ -278,6 +279,47 @@ def hac_scaffold_greenfield_site(
     """
     Scaffolds a complete greenfield SAP Commerce site, BaseStore, ProductCatalog,
     OCC headless URL patterns, OAuth clients, and optional B2B organization hierarchy.
+
+    ⚠️ IMPORTANT — Full Zero-to-Live Pipeline Orchestration:
+    When a user asks to "build a site from scratch" or "从零建站", this tool is only
+    STEP 1 of a mandatory 7-step pipeline. After calling this tool, the AI agent MUST
+    automatically continue executing ALL remaining steps WITHOUT waiting for further
+    user instructions:
+
+      Step 1: hac_scaffold_greenfield_site  → Create BaseSite, BaseStore, Catalogs, OAuth
+      Step 2: hac_ingest_external_storefront → If source_url is provided, crawl the website
+              to extract product categories, product names, descriptions, prices, images,
+              and attributes, then auto-generate and import ImpEx
+      Step 3: hac_impex_import              → (If user provides CSV/Excel/ImpEx instead of URL)
+      Step 4: hac_groovy_execute            → Bind product images from CDN/S3/crawled URLs
+      Step 5: hac_catalog_sync              → Sync ProductCatalog from Staged to Online
+      Step 6: hac_solr_reindex              → Full Solr reindex to make products searchable
+      Step 7: hac_spartacus_doctor + hac_storefront_autofix → Diagnose and auto-heal the
+              headless Spartacus storefront (CORS, OAuth, OCC URL patterns)
+
+    The user should only need to provide:
+      - Customer name (site_name)
+      - B2B or B2C (channel)
+      - Currencies and languages
+      - The customer's existing website URL (source_url) — optional, for product crawling
+
+    Everything else is automatic. Do NOT ask the user to manually specify each step.
+
+    Args:
+        site_id: Unique site identifier (e.g. 'apac-beverages')
+        site_name: Human-readable site name (e.g. 'APAC Beverages B2B Store')
+        channel: 'B2B' or 'B2C'
+        currency: Primary currency code (e.g. 'HKD', 'USD', 'CNY')
+        languages: List of language codes (e.g. ['zh_TW', 'en'])
+        source_url: Customer's existing website/storefront URL to crawl for products.
+                    When provided, agent MUST auto-invoke hac_ingest_external_storefront
+                    after site creation to populate the catalog.
+        storefront_origin: Spartacus frontend origin for CORS configuration
+        content_catalog: Custom content catalog ID (auto-generated if omitted)
+        delivery_countries: List of delivery country codes
+        setup_b2b_org: Whether to scaffold B2B org hierarchy (only when channel='B2B')
+        monthly_budget: B2B cost center monthly budget amount
+        approval_threshold: B2B order approval threshold amount
     """
     res = _scaffolder.scaffold_site(
         site_id=site_id,
@@ -426,7 +468,27 @@ def hac_ingest_external_storefront(
     reindex_solr: bool = True
 ) -> str:
     """
-    Crawls an external storefront, normalizes products, generates and imports ImpEx, syncs online, and reindexes Solr.
+    Crawls an external storefront (Shopify, WooCommerce, Magento, or any public e-commerce
+    site), extracts product catalog structure, product names, descriptions, prices, images,
+    and attributes, normalizes them into SAP Commerce ImpEx format, imports them into the
+    target ProductCatalog, syncs to Online, and reindexes Solr.
+
+    This is STEP 2 of the zero-to-live pipeline (automatically invoked after
+    hac_scaffold_greenfield_site when the user provides a source_url).
+
+    After this tool completes, the agent should continue with:
+      - hac_catalog_sync (if sync_online=False was set)
+      - hac_solr_reindex (if reindex_solr=False was set)
+      - hac_spartacus_doctor + hac_storefront_autofix (headless self-healing)
+
+    Args:
+        site_url: The customer's existing website URL to crawl (e.g. 'https://shop.example.com')
+        catalog_id: Target ProductCatalog ID to import products into
+        max_products: Maximum number of products to extract (default 20)
+        convert_to_b2b_cases: Convert product models to B2B unit-of-measure (cases/pallets)
+        target_currency: Currency code for imported prices
+        sync_online: Auto-sync Staged→Online after import (default True)
+        reindex_solr: Auto-trigger full Solr reindex after import (default True)
     """
     return _crawler.ingest_to_hybris(
         site_url=site_url,
