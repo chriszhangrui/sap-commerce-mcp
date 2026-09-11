@@ -10,7 +10,7 @@
 **SAP-Commerce-MCP** (`sap-commerce-mcp`) 是专为 **SAP Commerce Cloud (Hybris)** 与 **Headless Composable Storefront (Spartacus)** 打造的企业级 Model Context Protocol (MCP) 服务端。它赋予 AI 助手（Claude、Antigravity、Cursor 等）直接操控、运维、编排与自愈 Commerce 系统的全套原生能力。
 
 > 💡 **项目沿革（从 `hybris-hac-mcp` 到 `SAP-Commerce-MCP`）**：  
-> 本项目最初作为内部轻量级 HAC 管理控制台调用桥梁（原名 `hybris-hac-mcp`）诞生，用于免除频繁手动登录 HAC 执行脚本。在经历**太古可口可乐 (Swire Coca-Cola HK) eB2B 数字化改造**与**迈瑞医疗 (Mindray Global) B2B 审批流治理**等大型企业级真实战役后，全面进化为覆盖 **Greenfield 建站、B2B 组织与审批链体检、Drools 促销自动化编排、Spartacus 无头前台深度自愈、Solr 检索引擎运维及实战经验自沉淀** 的 Commerce 全生命周期 AI 架构师副驾驶。  
+> 本项目最初作为内部轻量级 HAC 管理控制台调用桥梁（原名 `hybris-hac-mcp`）诞生，用于免除频繁手动登录 HAC 执行脚本。在经历**某世界 500 强快消饮料企业 eB2B 数字化改造**与**某全球医疗器械企业 B2B 审批流治理**等大型企业级真实战役后，全面进化为覆盖 **Greenfield 建站、B2B 组织与审批链体检、Drools 促销自动化编排、Spartacus 无头前台深度自愈、Solr 检索引擎运维及实战经验自沉淀** 的 Commerce 全生命周期 AI 架构师副驾驶。  
 > *(注：为了对存量 Prompt、自动化脚本与已发布 Agent 保持 100% 向下兼容，工具名统一保持 `hac_*` 前缀。)*
 
 ---
@@ -107,7 +107,7 @@ python test_server.py
 - 🏗️ **从零到一 Greenfield 极速建站**：一键完成 `BaseSite`、`BaseStore`、`ProductCatalog`（Staged 与 Online 目录版本）、内容目录（Content Catalog）、同步任务（Sync Job）、多币种、多语言（`zh_TW` 繁体、`en` 英文、`zh` 简体）以及 OCC OAuth 客户端白名单配置。
 - 🩺 **Spartacus 前台体检与自动修复**：深度探测 Composable Storefront 的无头配置瓶颈，包括 CORS 跨域白名单缺漏、OCC URL 正则表达式不匹配、OAuth 信任客户端缺失、CMS 首页在线状态，并提供一键自动修复。
 - 🏢 **B2B 组织架构与审批流治理**：一键生成企业级多层级 B2B 客户架构，包括总部与子部门 `B2BUnit`、成本中心（Cost Center）、采购预算（Budget）、金额审批阈值（Order Threshold Permission）以及采购员与审批总监账号。
-- 🏷️ **Drools 促销规则引擎编排**：全自动编排太古可口可乐等真实对客场景的 Drools 促销规则（满额立减、买赠送礼、A+B+C 组合套餐、潜在促销达成引导提示），并全自动触发异步非阻塞编译发布。
+- 🏷️ **Drools 促销规则引擎编排**：全自动编排真实对客场景的 Drools 促销规则（满额立减、买赠送礼、A+B+C 组合套餐、潜在促销达成引导提示），并全自动触发异步非阻塞编译发布。
 - ⚡ **底层容器直接交互**：原生执行 FlexibleSearch 数据检索（直接渲染为 Markdown 表格）、ImpEx 事务级数据导入（具备语法严格校验与错误诊断）、Groovy 脚本在 Hybris JVM 容器内的实时热执行。
 - 🔍 **Solr 全生命周期运维**：支持进程内全量/增量 Solr 索引重建、监控索引后台任务、目录同步以及 Hybris 内存区域缓存（Region Cache）一键清空。
 - 🧠 **脚本资产库与自进化引擎**：内置已验证的 Groovy 与 ImpEx 资产库管理、领域排错知识库（`knowledge_base.json`）自动积累、以及面向 AI 智能体的自进化接口。
@@ -218,16 +218,16 @@ flowchart TD
 
 ## 🏆 实战标杆案例（Battle-Tested Scenarios）
 
-### 案例一：太古可口可乐 (Swire Coca-Cola HK) eB2B 数字化商城
-- **全生命周期建站**：通过 `hac_scaffold_greenfield_site` 一键开辟 `swire-beverages` 专属 B2B 站点，绑定港币 HKD 与美元 USD，启用繁体中文 `zh_TW` 与英文 `en`；
-- **105 款饮品主数据入库**：管理 13 大饮品系列（汽水、无糖、果汁、水）与 14 大经典品牌，通过 `hac_impex_import` 和 `hac_catalog_sync` 实现 Staged 到 Online 双目录同步；
-- **Drools 复杂组合促销编排**：利用 `hac_promotion_scaffold` 编排太古经典【A+B+C 汽水大礼包】：当购物车集齐经典可口可乐、无糖可乐与雪碧时，自动赠送 1 箱魔爪能量饮料，且中英文引导文案与 Drools 规则编译一次性就绪；
-- **Solr 即时全量重建**：通过 `hac_solr_reindex` 触发 `powertoolsIndex` 索引重构，前台搜索无缝立即可见。
+### 案例一：某世界 500 强快消饮料企业 eB2B 数字化商城（亚太区）
+- **全生命周期建站**：通过 `hac_scaffold_greenfield_site` 一键开辟专属 B2B 站点，绑定港币 HKD 与美元 USD，启用繁体中文 `zh_TW` 与英文 `en`；
+- **100+ 款饮品主数据入库**：管理 13 大饮品系列（汽水、无糖、果汁、水）与多个经典品牌，通过 `hac_impex_import` 和 `hac_catalog_sync` 实现 Staged 到 Online 双目录同步；
+- **Drools 复杂组合促销编排**：利用 `hac_promotion_scaffold` 编排【A+B+C 汽水大礼包】组合促销，当购物车集齐指定饮品时自动赠送礼品，且中英文引导文案与 Drools 规则编译一次性就绪；
+- **Solr 即时全量重建**：通过 `hac_solr_reindex` 触发索引重构，前台搜索无缝立即可见。
 
-### 案例二：迈瑞医疗 (Mindray Global) B2B 组织层级与审批流治理
-- **多层级组织构建**：通过 `hac_b2b_scaffold_org` 搭建迈瑞医疗总公司与【医疗设备与耗材采购部】、【IVD 检验采购部】二级单位；
-- **成本中心与审批阈值**：配置季度限额 $50,000 USD 的 `B2BBudget` 与单笔采购超 $5,000 触发总监审批权限；
-- **账号体检与放行**：通过 `hac_b2b_org_doctor` 针对采购经理 `buyer.mindray_global@demo.com` 进行 6 维体检，精确诊断为何订单被 HOLD 并自动修复用户组。
+### 案例二：某全球医疗器械企业 B2B 组织层级与审批流治理
+- **多层级组织构建**：通过 `hac_b2b_scaffold_org` 搭建企业总部与多个二级采购部门单位；
+- **成本中心与审批阈值**：配置季度限额的 `B2BBudget` 与单笔采购超额触发总监审批权限；
+- **账号体检与放行**：通过 `hac_b2b_org_doctor` 针对采购经理账号进行 6 维体检，精确诊断为何订单被 HOLD 并自动修复用户组。
 
 ---
 

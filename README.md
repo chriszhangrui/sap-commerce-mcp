@@ -19,7 +19,7 @@ Far beyond a basic Hybris Administration Console (HAC) bridge, it functions as a
 >
 > This project originated as **`hybris-hac-mcp`**, a developer tool focused on executing FlexibleSearch queries and Groovy scripts through the Hybris Administration Console (HAC).
 >
-> In actual enterprise delivery, large-scale customer engagements (such as **Swire Coca-Cola HK eB2B** and **Mindray Global B2B**) required far more than low-level script execution. They demanded Greenfield site provisioning, B2B organizational approval chain governance, Drools promotion engine compilation, Solr real-time indexing, and headless Spartacus full-stack diagnostics.
+> In actual enterprise delivery, large-scale customer engagements (such as a **Fortune 500 FMCG/Beverage eB2B portal** and a **Global Medical Device B2B procurement platform**) required far more than low-level script execution. They demanded Greenfield site provisioning, B2B organizational approval chain governance, Drools promotion engine compilation, Solr real-time indexing, and headless Spartacus full-stack diagnostics.
 >
 > Therefore, the project was comprehensively upgraded to **`SAP-Commerce-MCP`**. To ensure **100% backward compatibility** with existing AI agents, prompts, and automation skills, all tool names strictly retain their `hac_*` prefixes, while their underlying implementations and domain capabilities have evolved into a complete, enterprise-grade Commerce DevOps engine.
 
@@ -64,20 +64,20 @@ flowchart LR
 
 ## 🏢 Field-Tested Enterprise Case Studies
 
-### 🥤 Case 1: Swire Coca-Cola HK (太古可口可乐香港) eB2B Beverage Portal
-- **Challenge**: Deliver a brand-new eB2B beverage ordering platform for Hong Kong with 105 drink SKUs, 13 product lines, bilingual localization (Traditional Chinese `zh_TW` and English `en`), Drools beverage bundle promotions, and an Angular/Spartacus headless storefront.
+### 🥤 Case 1: FMCG Beverage eB2B Ordering Portal (Asia-Pacific Region)
+- **Challenge**: Deliver a brand-new eB2B beverage ordering platform with 100+ drink SKUs, 13 product lines, bilingual localization (Traditional Chinese `zh_TW` and English `en`), Drools beverage bundle promotions, and an Angular/Spartacus headless storefront.
 - **SAP-Commerce-MCP in Action**:
-  1. `hac_scaffold_greenfield_site`: Initialized `swire-beverages` BaseSite, dual product catalogs, and OCC OAuth clients in 15 seconds.
-  2. `hac_impex_import`: Imported 105 beverage SKUs with multi-tier wholesale pricing and category mappings.
-  3. `hac_groovy_execute`: Bound official S3 product imagery in bulk directly within the Hybris JVM container.
-  4. `hac_promotion_scaffold`: Provisioned an A+B+C beverage bundle promo (Coke + Sprite + Fanta -> Free Monster Energy) with automatic Drools rule compilation.
+  1. `hac_scaffold_greenfield_site`: Initialized the dedicated BaseSite, dual product catalogs, and OCC OAuth clients in 15 seconds.
+  2. `hac_impex_import`: Imported 100+ beverage SKUs with multi-tier wholesale pricing and category mappings.
+  3. `hac_groovy_execute`: Bound official product imagery in bulk directly within the Hybris JVM container.
+  4. `hac_promotion_scaffold`: Provisioned an A+B+C beverage bundle promo with automatic Drools rule compilation.
   5. `hac_solr_reindex`: Executed full Solr reindexing to immediately expose all products in the search facet index.
   6. `hac_storefront_autofix`: Automatically configured CORS whitelisting and OCC URL patterns for Spartacus on port 4200.
 
-### 🏥 Case 2: Mindray Global (迈瑞医疗) B2B Multi-Tier Approval & Cost Center Governance
+### 🏥 Case 2: Global Medical Device B2B Multi-Tier Approval & Cost Center Governance
 - **Challenge**: Establish an enterprise medical device procurement hierarchy across global branches, enforcing multi-tier cost center budgets and order threshold approvals.
 - **SAP-Commerce-MCP in Action**:
-  1. `hac_b2b_scaffold_org`: Created Mindray Root Unit, Radiology and Surgical departments, designated Cost Centers, and assigned $50,000 budgets with dual-threshold approval rules.
+  1. `hac_b2b_scaffold_org`: Created the corporate Root Unit, department-level sub-units (e.g. Radiology, Surgical), designated Cost Centers, and assigned budgets with dual-threshold approval rules.
   2. `hac_b2b_org_doctor`: Instantly analyzed and audited test buyer accounts, validating approval threshold triggers and cost center deduction chains before going live.
 
 ---
@@ -270,13 +270,13 @@ Expected verification output:
 Once connected, your AI assistant can execute complex Commerce tasks directly from natural language:
 
 ### Scenario 1: Greenfield B2B Storefront Scaffolding
-> *"Scaffold a new B2B site called `swire-beverages` with currency HKD and USD, languages zh_TW and en, link it to powertools catalogs, and verify Spartacus headless readiness."*
+> *"Scaffold a new B2B site called `apac-beverages` with currency HKD and USD, languages zh_TW and en, link it to powertools catalogs, and verify Spartacus headless readiness."*
 
 ### Scenario 2: Drools Promotion Orchestration
 > *"Create an A+B+C sparkling beverage bundle promotion in the powertoolsPromoGrp module: when a customer buys Coke, Sprite, and Fanta together, gift them 1 case of Monster Energy. Ensure the message is localized in English and Traditional Chinese."*
 
 ### Scenario 3: B2B Organization & Approval Flow Diagnosis
-> *"Run an audit on B2B buyer `buyer.mindray_global@demo.com`. Why is their checkout order being held for approval? Check their cost center and approval threshold."*
+> *"Run an audit on B2B buyer `buyer.medtech_global@demo.com`. Why is their checkout order being held for approval? Check their cost center and approval threshold."*
 
 ### Scenario 4: Live Data Inspection
 > *"Execute a FlexibleSearch to list the top 10 products in powertoolsProductCatalog Online version ordered by creation time."*
